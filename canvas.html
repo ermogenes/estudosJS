@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Estudos de HTML5 Canvas com JS</title>
+        <style type="text/css">
+            #palco{
+                display: block;
+            }
+         	html, body {
+                margin: 0px;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="palco"></canvas>
+        
+        <script>
+            window.onload = function (){
+
+                p = criaPalco2d(document.getElementById("palco"));
+
+                estudo001(p);
+                estudo002(p);
+
+                // ------------------------------------------------------------                
+                function estudo002(p){
+                /* Desenha um caminho com linhas aleatórias */
+                    p.contexto.beginPath();
+                    p.contexto.moveTo(Math.random() * p.largura, Math.random() * p.altura);
+                    for(var i = 0; i < 20; i++){
+                        p.contexto.lineTo(Math.random() * p.largura, Math.random() * p.altura);
+                    }
+                    p.contexto.stroke();
+                }
+                
+                
+                // ------------------------------------------------------------
+                function estudo001(p){
+                /* Cria padrão "zebrado" vertical preenchendo retângulos */
+                    for(var i = 0; i < p.largura; i+=1){
+                        if (i % 2 == 0){
+                            p.contexto.fillStyle = "black";
+                        }else{
+                            p.contexto.fillStyle = "white";
+                        }
+                        p.contexto.fillRect(i, 0, p.largura - i, p.altura);
+                    }
+                }
+            }
+
+            function criaPalco2d(canvas){
+                /* Cria área para desenho com toda o tamanho interno do navegador
+                    no contexto 2d, primeiro quadrante cartesiano, e retorna objeto para manipulação.
+                */
+                
+                function contextoCartesiano(contexto, altura){
+                    /* Ajusta o palco para coordenadas cartesianas:
+                        - Fixa o ponto 0,0 no canto inferior esquerdo
+                        - Tela fixa no primeiro quadrante (cresce para superior direito)
+                    */
+                    contexto.translate(0, altura); 
+                    contexto.scale(1, -1);
+                }
+
+                var palco = canvas,
+                    contexto = palco.getContext("2d"),
+                    largura = palco.width = window.innerWidth,
+                    altura = palco.height = window.innerHeight;
+                
+                contextoCartesiano(contexto, altura);
+                
+                return {
+                    palco: palco,
+                    contexto:contexto,
+                    largura:largura,
+                    altura:altura
+                }
+            }
+            
+        </script>
+    </body>
+</html>
