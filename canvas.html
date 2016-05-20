@@ -21,6 +21,22 @@
 
                 estudo001(p);
                 estudo002(p);
+                estudo003(p);
+                
+                
+                // ------------------------------------------------------------                
+                function estudo003(p){
+                /* Exibe uma senóide */
+                    p.contexto.translate(0, p.altura / 2);
+                    p.contexto.scale(25, 25);
+                    p.contexto.beginPath();
+                    p.contexto.moveTo(0,0);
+                    for(var x = 0; x < p.largura; x++){
+                        p.contexto.lineTo(x, Math.sin(x));
+                    }
+                    p.contexto.stroke();
+                }
+                
 
                 // ------------------------------------------------------------                
                 function estudo002(p){
